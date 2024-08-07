@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  database:
+    image: postgres:16.3
+    environment:
+      POSTGRES_DB: demo
+      POSTGRES_USER: database_username
+      POSTGRES_PASSWORD: database_password
+    ports:
+      - "5432:5432"

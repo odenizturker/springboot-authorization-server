@@ -1,32 +1,26 @@
-spring.application.name: springboot-authorization-server
-
-
-logging:
-  level:
-    org.springframework.security: trace
-
 spring:
-  security:
-    oauth2:
-      authorizationserver:
-        client:
-          oidc-client:
-            registration:
-              client-id: "oidc-client"
-              client-secret: "{noop}secret"
-              client-authentication-methods:
-                - "client_secret_basic"
-              authorization-grant-types:
-                - "authorization_code"
-                - "refresh_token"
-              redirect-uris:
-                - "http://127.0.0.1:8080/login/oauth2/code/oidc-client"
-              post-logout-redirect-uris:
-                - "http://127.0.0.1:8080/"
-              scopes:
-                - "openid"
-                - "profile"
-            require-authorization-consent: true
+  application.name: springboot-authorization-server
+  datasource:
+    username: ${database.username}
+    password: ${database.password}
+    url: jdbc:postgresql://${database.endpoint}/${database.name}
+    driver-class-name: org.postgresql.Driver
+    generate-unique-name: false
+  flyway:
+    user: ${database.username}
+    password: ${database.password}
+    url: jdbc:postgresql://${database.endpoint}/${database.name}
+    baselineOnMigrate: true
+    table: flyway_${spring.application.name}_schema_history
 
 server:
   port: 9000
+
+client:
+  secret: $2a$10$eh1SBZJ3Pf4usNcOSTsviO4zUhQ0pmrZBp/inKDgvQ51iUhpztP6S
+
+database:
+  endpoint: localhost:5432
+  name: demo
+  username: database_username
+  password: database_password
